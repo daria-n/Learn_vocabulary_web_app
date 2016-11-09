@@ -1,0 +1,19 @@
+{% extends 'vocabulary/base.html' %}
+
+{% block body %}
+
+<!--    <div class="container"> -->
+    <div class="container-fluid">
+        {% if my_words %}
+        <h3>Here are all the words from the database:</h3>
+        <ul>
+            {% for word in my_words %}
+            <li>{{ word.english }} from category: {{ word.category.category }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <h3>There are no words in the database</h3>
+        {% endif %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Learn vocabulary with me!{% endblock %}</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'vocabulary/style.css' %}" />
+    <link href="{% static 'vocabulary/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+
+            <!-- Header -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{% url 'vocabulary:index' %}">VocMaster</a>
+            </div>
+            <!-- END: Header -->
+
+            <!-- Items -->
+            <div class="collapse navbar-collapse" id="topNavBar">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="{% url 'vocabulary:learning' %}">
+                            <span class="fa fa-lightbulb-o"></span>&nbsp Learn
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'vocabulary:testing' %}">
+                            <span class="fa fa-edit"></span>&nbsp Test yourself
+                        </a>
+                    </li>
+<!-- PROGRESS and PROFILE visible only when user is logged
+                    <li>
+                        <a href="#">
+                            <span class="fa fa-bar-chart-o"></span>&nbsp Progress
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-user"></span>&nbsp Profile
+                        </a>
+                    </li>
+-->
+                </ul>
+                <!-- Logout button -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="{% url 'vocabulary:logging_out' %}">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Logout
+                        </a>
+                    </li>
+                </ul>
+                <!-- END: Logout button -->
+
+            </div>
+            <!-- END: Items -->
+
+        </div>
+    </nav>
+    <!-- END: Navigation Bar -->
+{% block body %}
+{% endblock %}
+
+</body>
+</html>

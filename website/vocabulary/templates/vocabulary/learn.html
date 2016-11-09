@@ -1,0 +1,21 @@
+{% extends 'vocabulary/base.html' %}
+
+{% block title %}Learn{% endblock %}
+
+{% block body %}
+
+{% load static %}
+
+<h2>Here you can LEARN the new words.</h2>
+
+{% if categories %}
+    <h3>Choose category:</h3>
+    {% for cat in categories %}
+    <li> <a href="{% url 'vocabulary:category' cat.category %}"> <img src="{% static cat.picture %}" alt="" /> <br> {{ cat }} </a> </li>
+    {% endfor %}
+{% else %}
+<h3>There are no words in the database</h3>
+{% endif %}
+
+{% endblock %}
+

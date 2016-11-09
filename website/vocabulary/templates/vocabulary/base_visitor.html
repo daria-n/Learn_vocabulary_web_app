@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Learn vocabulary with me!{% endblock %}</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'vocabulary/style.css' %}" />
+    <link href="{% static 'vocabulary/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+
+            <!-- Header -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{% url 'vocabulary:index' %}">VocMaster</a>
+            </div>
+            <!-- END: Header -->
+
+            <!-- Items -->
+            <div class="collapse navbar-collapse" id="topNavBar">
+<!--
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="{% url 'vocabulary:learning' %}">
+                            <span class="fa fa-lightbulb-o"></span>&nbsp Learn
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'vocabulary:testing' %}">
+                            <span class="fa fa-edit"></span>&nbsp Test yourself
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="fa fa-bar-chart-o"></span>&nbsp Progress
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-user"></span>&nbsp Profile
+                        </a>
+                    </li>
+                </ul>
+-->
+                <!-- Login/Register form - copied -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li><p class="navbar-text">Already have an account?</p></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b><span class="caret"></span></a>
+			            <ul id="login-dp" class="dropdown-menu">
+                            <li>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                    Login
+                                        <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
+                                            <div class="form-group">
+                                                 <label class="sr-only" for="exampleInputEmail2">Email address</label>
+                                                 <input type="email" class="form-control" id="exampleInputEmail2" placeholder="login" required>
+                                            </div>
+                                            <div class="form-group">
+                                                 <label class="sr-only" for="exampleInputPassword2">Password</label>
+                                                 <input type="password" class="form-control" id="exampleInputPassword2" placeholder="password" required>
+                                            </div>
+                                            <div class="form-group">
+                                                 <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="bottom text-center">
+                                    New here ? <a href="{% url 'vocabulary:registering' %}">Click here</a> to register.
+                                    </div>
+                                </div>
+                            </li>
+			            </ul>
+                    </li>
+                    <li><p class="navbar-text">or</p></li>
+                    <li>
+                        <a href="{% url 'vocabulary:registering' %}">
+                            <b>Register</b>
+                        </a>
+                    </li>
+                </ul>
+                <!-- END: Login/Register form -->
+
+            </div>
+            <!-- END: Items -->
+
+        </div>
+    </nav>
+    <!-- END: Navigation Bar -->
+{% block body %}
+{% endblock %}
+
+</body>
+</html>
