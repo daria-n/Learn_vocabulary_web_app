@@ -31,16 +31,18 @@
             <!-- Items -->
             <div class="collapse navbar-collapse" id="topNavBar">
                 <ul class="nav navbar-nav">
-                    <li>
+                    {% with url_name=request.resolver_match.url_name %}
+                    <li class="{% if url_name == 'learning' %}active{% endif %}">
                         <a href="{% url 'vocabulary:learning' %}">
                             <span class="fa fa-lightbulb-o"></span>&nbsp Learn
                         </a>
                     </li>
-                    <li>
+                    <li class="{% if url_name == 'testing' %}active{% endif %}">
                         <a href="{% url 'vocabulary:testing' %}">
                             <span class="fa fa-edit"></span>&nbsp Test yourself
                         </a>
                     </li>
+                    {% endwith %}
 <!-- PROGRESS and PROFILE visible only when user is logged
                     <li>
                         <a href="#">
