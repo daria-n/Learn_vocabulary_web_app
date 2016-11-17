@@ -99,6 +99,36 @@ class UserFormView(generic.View):
         return render(request, self.template_name, {'form': form})
 
 
+class LoginView(generic.View):
+    form_class = UserForm
+    template_name = 'vocabulary/login_form.html'
+
+    # display blank form
+    def get(self, request):
+        if request.user.is_authenticated():
+            return redirect('vocabulary:index')
+        else:
+            form = self.form_class(None)
+            return render(request, self.template_name, {'form': form})
+
+    # process form data
+    def post(self, request):
+        username = request.POST['username']
+        password = request.POST['password']
+
+        # returns User objects if credentials are correct
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return redirect('vocabulary:index')
+            else:
+                return render(request, self.template_name, {'error_message': 'Your account has been disabled'})
+        else:
+            return render(request, self.template_name, {'error_message': 'Invalid login'})
+
+
 class LogoutView(generic.ListView):
     # template_name = 'vocabulary/index_visitor.html'
     # context_object_name = 'any_name_here'

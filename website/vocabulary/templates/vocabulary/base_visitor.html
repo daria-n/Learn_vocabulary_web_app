@@ -54,8 +54,9 @@
                     </li>
                 </ul>
 -->
-                <!-- Login/Register form - copied -->
+                <!-- Login/Register form -->
                 <ul class="nav navbar-nav navbar-right">
+                    <!--
                     <li><p class="navbar-text">Already have an account?</p></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b><span class="caret"></span></a>
@@ -86,10 +87,12 @@
 			            </ul>
                     </li>
                     <li><p class="navbar-text">or</p></li>
-                    <li>
-                        <a href="{% url 'vocabulary:registering' %}">
-                            <b>Register</b>
-                        </a>
+                    -->
+                    <li class="{% block login_active %}{% endblock %}">
+                        <a href="{% url 'vocabulary:logging_in' %}"><b>Log In</b></a>
+                    </li>
+                    <li class="{% block register_active %}{% endblock %}">
+                        <a href="{% url 'vocabulary:registering' %}"><b>Register</b></a>
                     </li>
                 </ul>
                 <!-- END: Login/Register form -->

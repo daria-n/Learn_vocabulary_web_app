@@ -8,11 +8,6 @@ https://docs.djangoproject.com/en/dev/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
-
-admin account:
-login: daria
-emial: admin@example.com
-password: like always, long, small letters, no numbers
 """
 
 import os

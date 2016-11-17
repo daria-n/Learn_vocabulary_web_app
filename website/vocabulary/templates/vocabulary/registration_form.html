@@ -1,5 +1,6 @@
 {% extends 'vocabulary/base_visitor.html' %}
 {% block title %}Register{% endblock %}
+{% block register_active %}active{% endblock %}
 
 {% block body %}
 <div class="container-fluid">
@@ -14,7 +15,7 @@
                         <p><strong>{{ error_message }}</strong></p>
                     {% endif %}
                     <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
-                        {%  csrf_token %}
+                        {% csrf_token %}
                         {% include 'vocabulary/form-template.html' %}
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
@@ -22,6 +23,9 @@
                             </div>
                         </div>
                     </form>
+                </div>
+                <div class="panel-footer">
+                    Already have an account? <a href="{% url 'vocabulary:logging_in' %}">Click here</a> to log in.
                 </div>
             </div>
         </div>
