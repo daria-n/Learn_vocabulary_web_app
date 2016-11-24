@@ -1,12 +1,12 @@
 {% extends 'vocabulary/base.html' %}
 
-{% block title %}Learn {{ category.category }}!{% endblock %}
+{% block title %}Learn {{ object }}!{% endblock %}
 
 {% block body %}
 
 {% load static %}
 
-<h2>Here you can LEARN the new words from chosen category: {{ category.category }}.</h2>
+<h2>Here you can LEARN the new words from chosen category: {{ object }}.</h2>
 
     {% for word in category.word_set.all %}
             {{ word.english }} (ang.) - {{ word.polish }} <br>

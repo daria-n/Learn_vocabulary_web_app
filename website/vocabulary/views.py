@@ -53,6 +53,13 @@ class CategoryLearningView(generic.DetailView):
     template_name = 'vocabulary/learn_category.html'
     slug_url_kwarg = 'slug'
 
+    def get(self, request, **kwargs):
+        if not request.user.is_authenticated():
+            return redirect('vocabulary:index')
+        else:
+            context = self.get_context_data(object=self.get_object())
+            return self.render_to_response(context)
+
 
 class TestingView(generic.ListView):
     template_name = 'vocabulary/test.html'
@@ -60,6 +67,12 @@ class TestingView(generic.ListView):
 
     def get_queryset(self):
         return Word.objects.all()
+
+    def get(self, request):
+        if not request.user.is_authenticated():
+            return redirect('vocabulary:index')
+        else:
+            return render(request, self.template_name, {self.context_object_name: self.get_queryset()})
 
 
 class UserFormView(generic.View):
