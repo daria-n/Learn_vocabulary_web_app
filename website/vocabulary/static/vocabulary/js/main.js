@@ -1,6 +1,8 @@
 var word_index = 0;
 var total = -1;
 var score = 0;
+var index_array;
+var shuffled_index_array;
 var obj;
 
 $(document).ready(function () {
@@ -62,6 +64,13 @@ $(document).ready(function () {
      */
 });
 
+function startTheTest() {
+    // $('#next_button').show();
+    $('#start_test_button').hide();
+    $('#testing_form').show();
+    loadWords();
+}
+
 function loadWords() {
     var command = $('#chosen_category').text();
     $.ajax({
@@ -73,9 +82,11 @@ function loadWords() {
         success: function (data) {
             obj = JSON.parse(data['all_data']);
             total = data['counter'];
-            console.log(data);
-            console.log(data['all_data']);
-            $('#word_to_translate').text(word_index + ": " + obj['words'][word_index]['eng']);
+            index_array = Array.apply(null, Array(total)).map(function (_, i) {
+                return i;
+            });
+            shuffled_index_array = shuffle(index_array);
+            showNextWord();
         },
         error: function (error) {
             console.log("Error:");
@@ -84,15 +95,12 @@ function loadWords() {
     });
 }
 
-function startTheTest() {
-    // $('#next_button').show();
-        $('#start_test_button').hide();
-    $('#testing_form').show();
-    loadWords();
+function showNextWord() {
+    $('#word_to_translate').text(shuffled_index_array[word_index] + ": " + obj['words'][shuffled_index_array[word_index]]['eng']);
 }
 
 function checkUserInput() {
-    var correct = obj['words'][word_index]['pol'];
+    var correct = obj['words'][shuffled_index_array[word_index]]['pol'];
     var input = $("#user_translation").val();
     if (correct == input) {
         alert("Correct! :)");
@@ -109,16 +117,33 @@ function checkUserInput() {
         $('#word_to_translate').hide();
         $('#repeat_test_button').show();
     }
-    $('#word_to_translate').text(word_index + ": " + obj['words'][word_index]['eng']);
+    showNextWord();
     $("#user_translation").val('');
 }
 
 function repeatTheTest() {
     word_index = 0;
     score = 0;
+    shuffled_index_array = shuffle(index_array);
     $('#repeat_test_button').hide();
     $("#testing_form").show();
-    $('#word_to_translate').text(word_index + ": " + obj['words'][word_index]['eng']);
+    showNextWord();
     $('#word_to_translate').show();
     $("#check_word_button").show();
+}
+
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+    return array;
 }
