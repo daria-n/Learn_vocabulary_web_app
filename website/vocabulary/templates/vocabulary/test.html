@@ -4,8 +4,20 @@
 
 {% block body %}
 
-<h2>Here you can TEST words you learned.</h2>
+{% load static %}
 
+<h2>Here you can TEST the words you learned.</h2>
+
+{% if categories %}
+    <h3>Choose category:</h3>
+    {% for cat in categories %}
+    <li> <a href="{% url 'vocabulary:test_by_category' cat.category %}"> <img src="{% static cat.picture %}" alt="" /> <br> {{ cat }} </a> </li>
+    {% endfor %}
+{% else %}
+<h3>There are no words in the database</h3>
+{% endif %}
+
+<!--
 <h3>Choose testing method:</h3>
 <ul>
     <li> <a href="#"> wybierz ilustrację na podstawie słówka (4 dostępne do wyboru) </a> </li>
@@ -18,5 +30,5 @@
     <li> <a href="#"> na podstawie słuchu napisz wyraz lub zdanie </a> </li>
     <li> <a href="#"> na podstawie obrazka napisz słowo </a> </li>
 </ul>
-
+-->
 {% endblock %}

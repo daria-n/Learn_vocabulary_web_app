@@ -1,0 +1,36 @@
+{% extends 'vocabulary/base.html' %}
+{% block title %}Json{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+    {% if current_data %}
+        <h3>All the words from database:</h3>
+        <table class="table table-condensed table-hover">
+            <thead>
+            <tr class="active">
+                <th>category</th>
+                <th>english</th>
+                <th>polish</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for data in current_data %}
+                <tr>
+                    <td>{{ data.category }}</td>
+                    <td>{{ data.english }}</td>
+                    <td>{{ data.polish }}</td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+    {% else %}
+        <h3> No data! </h3>
+    {% endif %}
+
+{% endblock body %}
+
+</div>

@@ -1,0 +1,27 @@
+{% extends 'vocabulary/base.html' %}
+
+{% block title %}Test {{ object }}!{% endblock %}
+
+{% block body %}
+
+{% load static %}
+
+<h2>Here you can TEST the words from chosen category: <span id="chosen_category">{{ object }}</span>.</h2>
+<button type="submit" class="btn btn-default" id="start_test_button">CLICK TO START THE TEST! :)</button>
+<div id="word_to_translate"></div>
+<form class="form-inline" id="testing_form">
+    <div class="form-group">
+        <label for="user_translation">Polish:</label>
+        <input type="text" class="form-control" id="user_translation">
+    </div>
+    <div class="actions">
+        <button type="submit" class="btn btn-default" disabled="disabled" id="check_word_button">Check</button>
+    </div>
+</form>
+
+<button type="submit" class="btn btn-default" id="repeat_test_button">Repeat the test</button>
+
+<!-- <button type="submit" class="btn btn-default" id="prev_button">PREVIOUS</button> -->
+<!-- <button type="submit" class="btn btn-default" id="next_button">NEXT</button> -->
+
+{% endblock %}
