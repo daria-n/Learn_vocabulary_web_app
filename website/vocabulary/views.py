@@ -39,8 +39,11 @@ def json(request):
     else:
         if request.is_ajax():
             command = request.GET['Command']
-            category_id = Category.objects.get(category=command).id
-            my_data = Word.objects.filter(category=category_id)
+            if command == 'all':
+                my_data = Word.objects.all()
+            else:
+                category_id = Category.objects.get(category=command).id
+                my_data = Word.objects.filter(category=category_id)
             total_num = my_data.count()
             data = js.dumps({'words': [{'eng': elem.english, 'pol': elem.polish} for elem in my_data]})
             context = {'all_data': data, 'counter': total_num}

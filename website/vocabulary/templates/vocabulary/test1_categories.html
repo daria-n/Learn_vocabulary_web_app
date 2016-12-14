@@ -12,7 +12,7 @@
 {% if categories %}
 <h3>Choose category:</h3>
 {% for cat in categories %}
-<li><a href="{% url 'vocabulary:testing_translate' cat.category %}"> <img src="{% static cat.picture %}" alt=""/> <br>
+<li><a href="{% url 'vocabulary:testing_translate' cat.category %}"> <img src="{% static cat.picture %}" height="100px" alt=""/> <br>
     {{ cat }} </a></li>
 {% endfor %}
 {% else %}
