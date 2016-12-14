@@ -4,10 +4,18 @@ var score = 0;
 var index_array;
 var shuffled_index_array;
 var obj;
+var given_lang;
+var to_translate_lang;
 
 $(document).ready(function () {
 
-    $('form').get(0).reset();
+    if (window.location.pathname == '/test1/' || window.location.pathname == '/test2/')
+        setGivenLanguage();
+
+    if ((window.location.pathname).indexOf('test_translate') > 0) {
+        getGivenLanguage();
+        $('form').get(0).reset();
+    }
 
     $("#start_test_button").click(function () {
         startTheTest();
@@ -71,6 +79,36 @@ function startTheTest() {
     loadWords();
 }
 
+function setGivenLanguage() {
+    if ($('#given_language').text() == 'english') {
+        given_lang = 'eng';
+        to_translate_lang = 'pol';
+    }
+    else if ($('#given_language').text() == 'polish') {
+        given_lang = 'pol';
+        to_translate_lang = 'eng';
+    }
+    localStorage.setItem("given_lang", given_lang);
+    localStorage.setItem("to_translate_lang", to_translate_lang);
+}
+
+function getGivenLanguage() {
+    given_lang = localStorage.getItem("given_lang");
+    to_translate_lang = localStorage.getItem("to_translate_lang");
+    if (given_lang == 'eng') {
+        $('#set_given_lang').text('english');
+        $('#set_to_translate_lang').text('polish');
+        $('.dropdown-menu li').filter('.eng_pol').addClass('active');
+        $('.dropdown-menu li').filter('.pol_eng').remove('active');
+    }
+    else {
+        $('#set_given_lang').text('polish');
+        $('#set_to_translate_lang').text('english');
+        $('.dropdown-menu li').filter('.pol_eng').addClass('active');
+        $('.dropdown-menu li').filter('.eng_pol').remove('active');
+    }
+}
+
 function loadWords() {
     var command = $('#chosen_category').text();
     $.ajax({
@@ -96,11 +134,11 @@ function loadWords() {
 }
 
 function showNextWord() {
-    $('#word_to_translate').text(shuffled_index_array[word_index] + ": " + obj['words'][shuffled_index_array[word_index]]['eng']);
+    $('#word_to_translate').text(shuffled_index_array[word_index] + ": " + obj['words'][shuffled_index_array[word_index]][given_lang]);
 }
 
 function checkUserInput() {
-    var correct = obj['words'][shuffled_index_array[word_index]]['pol'];
+    var correct = obj['words'][shuffled_index_array[word_index]][to_translate_lang];
     var input = $("#user_translation").val();
     if (correct == input) {
         alert("Correct! :)");

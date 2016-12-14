@@ -7,6 +7,8 @@ from .models import Word, Category
 from .forms import UserForm
 from django.http import JsonResponse
 import json as js
+
+
 # from django.urls import reverse
 
 
@@ -32,20 +34,23 @@ class IndexView(generic.ListView):
 
 
 def json(request):
-    if request.is_ajax():
-        command = request.GET['Command']
-        category_id = Category.objects.get(category=command).id
-        my_data = Word.objects.filter(category=category_id)
-        total_num = my_data.count()
-        data = js.dumps({'words': [{'eng': elem.english, 'pol': elem.polish} for elem in my_data]})
-        context = {'all_data': data, 'counter': total_num}
-        return JsonResponse(context, safe=False)
+    if not request.user.is_authenticated():
+        return redirect('vocabulary:index')
     else:
-        # return redirect('vocabulary:index')
-        my_data = Word.objects.all()
-        my_data = list(reversed(my_data))
-        count = len(my_data)
-        return render(request, 'vocabulary/json.html', {'current_data': my_data, 'count': count})
+        if request.is_ajax():
+            command = request.GET['Command']
+            category_id = Category.objects.get(category=command).id
+            my_data = Word.objects.filter(category=category_id)
+            total_num = my_data.count()
+            data = js.dumps({'words': [{'eng': elem.english, 'pol': elem.polish} for elem in my_data]})
+            context = {'all_data': data, 'counter': total_num}
+            return JsonResponse(context, safe=False)
+        else:
+            # return redirect('vocabulary:index')
+            my_data = Word.objects.all()
+            my_data = list(reversed(my_data))
+            count = len(my_data)
+            return render(request, 'vocabulary/json.html', {'current_data': my_data, 'count': count})
 
 
 class LearningView(generic.ListView):
@@ -76,8 +81,22 @@ class CategoryLearningView(generic.DetailView):
             return self.render_to_response(context)
 
 
-class TestingView(generic.ListView):
-    template_name = 'vocabulary/test.html'
+class TestingView1(generic.ListView):
+    template_name = 'vocabulary/test1_categories.html'
+    context_object_name = 'categories'
+
+    def get_queryset(self):
+        return Category.objects.all()
+
+    def get(self, request):
+        if not request.user.is_authenticated():
+            return redirect('vocabulary:index')
+        else:
+            return render(request, self.template_name, {self.context_object_name: self.get_queryset()})
+
+
+class TestingView2(generic.ListView):
+    template_name = 'vocabulary/test2_categories.html'
     context_object_name = 'categories'
 
     def get_queryset(self):
@@ -92,7 +111,7 @@ class TestingView(generic.ListView):
 
 class CategoryTestingView(generic.DetailView):
     model = Category
-    template_name = 'vocabulary/test_category.html'
+    template_name = 'vocabulary/test_translate.html'
     slug_url_kwarg = 'slug'
 
     def get(self, request, **kwargs):

@@ -34,6 +34,11 @@ body {
     display: none;
 }
 */
+#word_to_translate {
+    color: blue;
+    font-size: 150%;
+}
+
 #repeat_test_button{
     display: none;
 }
