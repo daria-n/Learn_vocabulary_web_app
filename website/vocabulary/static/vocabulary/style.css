@@ -39,12 +39,39 @@ body {
     font-size: 150%;
 }
 
-#repeat_test_button{
+#correct_answer {
+    color: purple;
+    font-weight: bold;
+}
+
+#correct_tick {
+    display: none;
+}
+
+#correct_modal_title {
+    display: none;
+}
+
+#wrong_cross {
+    display: none;
+}
+
+#wrong_modal_title {
+    display: none;
+}
+
+#repeat_test_button {
     display: none;
 }
 
 #testing_form {
     display: none;
+}
+
+@media screen and (min-width: 768px) {
+    #myModal .modal-dialog {
+        width: 400px;
+    }
 }
 
 @media (max-width: 768px) {

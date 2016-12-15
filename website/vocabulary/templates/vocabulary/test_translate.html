@@ -8,19 +8,46 @@
 
 <h2>Here you can TEST the words from chosen category: <span id="chosen_category">{{ object }}</span>.</h2>
 <h3>Translate the word given in <span id="set_given_lang"></span> into <span id="set_to_translate_lang"></span>:</h3>
-<button type="submit" class="btn btn-default" id="start_test_button">CLICK TO START THE TEST! :)</button>
+<button type="submit" class="btn btn-primary" id="start_test_button">CLICK TO START THE TEST! :)</button>
 <div id="word_to_translate"></div>
 <form class="form-inline" id="testing_form">
     <div class="form-group">
         <label for="user_translation">Your answer:</label>
-        <input type="text" class="form-control" id="user_translation">
+        <input type="text" class="form-control" id="user_translation" value="">
     </div>
     <div class="actions">
-        <button type="submit" class="btn btn-default" disabled="disabled" id="check_word_button">Check</button>
+        <button type="submit" class="btn btn-info" disabled="disabled" id="check_word_button" data-toggle="modal"
+                data-target="#myModal">Check
+        </button>
     </div>
 </form>
 
-<button type="submit" class="btn btn-default" id="repeat_test_button">Repeat the test</button>
+<button type="submit" class="btn btn-primary" id="repeat_test_button">Repeat the test</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">
+                    <span id="correct_modal_title">Correct!</span>
+                    <span id="wrong_modal_title">Wrong...</span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <span id="correct_tick"><img src="/static/vocabulary/pictures/tick.png" height='70px' alt="">Congratulations, keep going!</span>
+                <span id="wrong_cross"><img src="/static/vocabulary/pictures/cross.png" height='70px' alt="">The correct answer is:
+                    <span id="correct_answer"></span>.
+                </span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="close_modal_button">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- <button type="submit" class="btn btn-default" id="prev_button">PREVIOUS</button> -->
 <!-- <button type="submit" class="btn btn-default" id="next_button">NEXT</button> -->

@@ -25,6 +25,10 @@ $(document).ready(function () {
         checkUserInput();
     });
 
+    $('#close_modal_button').click(function () {
+        showNextWord();
+    });
+
     $("#repeat_test_button").click(function () {
         repeatTheTest();
     });
@@ -135,17 +139,26 @@ function loadWords() {
 
 function showNextWord() {
     $('#word_to_translate').text(shuffled_index_array[word_index] + ": " + obj['words'][shuffled_index_array[word_index]][given_lang]);
+    $("#user_translation").val("");
 }
 
 function checkUserInput() {
     var correct = obj['words'][shuffled_index_array[word_index]][to_translate_lang];
     var input = $("#user_translation").val();
     if (correct == input) {
-        alert("Correct! :)");
+        $('#wrong_modal_title').hide();
+        $('#wrong_cross').hide();
+        $('#correct_modal_title').show();
+        $('#correct_tick').show();
         score += 1;
     }
-    else
-        alert("Wrong :(");
+    else {
+        $('#correct_answer').text(correct);
+        $('#correct_modal_title').hide();
+        $('#correct_tick').hide();
+        $('#wrong_modal_title').show();
+        $('#wrong_cross').show();
+    }
     if (word_index < total - 1)
         word_index += 1;
     else {
@@ -155,8 +168,6 @@ function checkUserInput() {
         $('#word_to_translate').hide();
         $('#repeat_test_button').show();
     }
-    showNextWord();
-    $("#user_translation").val('');
 }
 
 function repeatTheTest() {
