@@ -29,6 +29,13 @@ $(document).ready(function () {
         showNextWord();
     });
 
+    $('.modal').keypress(function (e) {
+        if (e.which == 13) {
+            $(this).modal('hide');
+            showNextWord();
+        }
+    });
+
     $("#repeat_test_button").click(function () {
         repeatTheTest();
     });
@@ -162,7 +169,8 @@ function checkUserInput() {
     if (word_index < total - 1)
         word_index += 1;
     else {
-        alert("Your score is: " + score + "/" + total);
+        $('#test_finished').show();
+        $('#score').text(score + "/" + total);
         $('#check_word_button').hide();
         $("#testing_form").hide();
         $('#word_to_translate').hide();
@@ -171,6 +179,7 @@ function checkUserInput() {
 }
 
 function repeatTheTest() {
+    $('#test_finished').hide();
     word_index = 0;
     score = 0;
     shuffled_index_array = shuffle(index_array);

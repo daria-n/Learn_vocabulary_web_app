@@ -60,6 +60,15 @@ body {
     display: none;
 }
 
+#test_finished {
+    display: none;
+}
+
+#score {
+    color: purple;
+    font-weight: bold;
+}
+
 #repeat_test_button {
     display: none;
 }
