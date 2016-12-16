@@ -25,7 +25,7 @@ $(document).ready(function () {
         checkUserInput();
     });
 
-    $('#close_modal_button').click(function () {
+    $('.modal button').click(function () {
         showNextWord();
     });
 
@@ -135,7 +135,7 @@ function loadWords() {
                 return i;
             });
             shuffled_index_array = shuffle(index_array);
-            showNextWord();
+            showWord();
         },
         error: function (error) {
             console.log("Error:");
@@ -144,9 +144,24 @@ function loadWords() {
     });
 }
 
-function showNextWord() {
+function showWord() {
     $('#word_to_translate').text(shuffled_index_array[word_index] + ": " + obj['words'][shuffled_index_array[word_index]][given_lang]);
     $("#user_translation").val("");
+    $('#check_word_button').attr('disabled', true);
+    $('#user_translation').focus();
+}
+
+function showNextWord() {
+    if (word_index < total - 1) {
+        word_index += 1;
+        showWord();
+    }
+    else {
+        $('#check_word_button').hide();
+        $("#testing_form").hide();
+        $('#word_to_translate').hide();
+        $('#repeat_test_button').show();
+    }
 }
 
 function checkUserInput() {
@@ -166,15 +181,9 @@ function checkUserInput() {
         $('#wrong_modal_title').show();
         $('#wrong_cross').show();
     }
-    if (word_index < total - 1)
-        word_index += 1;
-    else {
+    if (word_index >= total - 1) {
         $('#test_finished').show();
         $('#score').text(score + "/" + total);
-        $('#check_word_button').hide();
-        $("#testing_form").hide();
-        $('#word_to_translate').hide();
-        $('#repeat_test_button').show();
     }
 }
 
