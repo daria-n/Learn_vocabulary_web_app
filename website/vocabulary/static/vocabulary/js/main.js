@@ -9,10 +9,11 @@ var to_translate_lang;
 
 $(document).ready(function () {
 
-    if (window.location.pathname == '/test1/' || window.location.pathname == '/test2/')
+    if (window.location.pathname == '/test1/' || window.location.pathname == '/test2/' || window.location.pathname == '/test3/') {
         setGivenLanguage();
+    }
 
-    if ((window.location.pathname).indexOf('test_translate') > 0) {
+    if (window.location.pathname.indexOf('test_translate') > 0 || window.location.pathname.indexOf('test_listen') > 0) {
         getGivenLanguage();
         $('form').get(0).reset();
     }
@@ -58,33 +59,9 @@ $(document).ready(function () {
         }
     });
 
-    /*
-     $("#next_button").click(function() {
-     if(word_index < total) {
-     word_index += 1;
-     //$('#prev_button').show();
-     }
-     if(word_index >= total-1)
-     $('#next_button').hide();
-     //$('#word_to_translate').text(word_index + ": " + obj['words'][word_index]['eng'] + " - " + obj['words'][word_index]['pol']);
-     $('#word_to_translate').text(word_index + ": " + obj['words'][word_index]['eng']);
-     });
-
-     $("#prev_button").click(function() {
-     if(word_index > 0) {
-     word_index -= 1;
-     $('#next_button').show();
-     }
-     if(word_index <= 0)
-     $('#prev_button').hide();
-     $('#word_to_translate').text(word_index + ": " + obj['words'][word_index]['eng'] + " - " + obj['words'][word_index]['pol']);
-     document.getElementById("word_index").innerHTML = word_index;
-     });
-     */
 });
 
 function startTheTest() {
-    // $('#next_button').show();
     $('#start_test_button').hide();
     $('#testing_form').show();
     loadWords();
@@ -106,17 +83,24 @@ function setGivenLanguage() {
 function getGivenLanguage() {
     given_lang = localStorage.getItem("given_lang");
     to_translate_lang = localStorage.getItem("to_translate_lang");
-    if (given_lang == 'eng') {
+    if (window.location.pathname.indexOf('test_listen') > 0) {
+        $('#set_given_lang').text('english');
+        $('#set_to_translate_lang').text('polish');
+        $('.dropdown-menu li').filter('.listen').addClass('active');
+        //$('.dropdown-menu li').filter('.eng_pol').remove('active');
+        //$('.dropdown-menu li').filter('.pol_eng').remove('active');
+    }
+    else if (given_lang == 'eng') {
         $('#set_given_lang').text('english');
         $('#set_to_translate_lang').text('polish');
         $('.dropdown-menu li').filter('.eng_pol').addClass('active');
-        $('.dropdown-menu li').filter('.pol_eng').remove('active');
+        //$('.dropdown-menu li').filter('.pol_eng').remove('active');
     }
     else {
         $('#set_given_lang').text('polish');
         $('#set_to_translate_lang').text('english');
         $('.dropdown-menu li').filter('.pol_eng').addClass('active');
-        $('.dropdown-menu li').filter('.eng_pol').remove('active');
+        //$('.dropdown-menu li').filter('.eng_pol').remove('active');
     }
 }
 
@@ -124,7 +108,7 @@ function loadWords() {
     var command = $('#chosen_category').text();
     $.ajax({
         type: "GET",
-        url: "/tralala/json/",
+        url: "/json/",
         data: {Command: command},
         cache: false,
         dataType: "json",
@@ -145,7 +129,15 @@ function loadWords() {
 }
 
 function showWord() {
-    $('#word_to_translate').text(shuffled_index_array[word_index] + ": " + obj['words'][shuffled_index_array[word_index]][given_lang]);
+    var word_to_translate = obj['words'][shuffled_index_array[word_index]][given_lang]
+    if (window.location.pathname.indexOf('test_translate') > 0) {
+        $('#word_to_translate').text(word_to_translate);
+    }
+    else if (window.location.pathname.indexOf('test_listen') > 0) {
+        $("#playAudioButton").show();
+        $("#word_to_translate_audio").attr('src', '/static/vocabulary/audios/' + word_to_translate + '.mp3');
+        $("#word_to_translate_audio").trigger('play');
+    }
     $("#user_translation").val("");
     $('#check_word_button').attr('disabled', true);
     $('#user_translation').focus();
@@ -157,6 +149,7 @@ function showNextWord() {
         showWord();
     }
     else {
+        $("#playAudioButton").hide();
         $('#check_word_button').hide();
         $("#testing_form").hide();
         $('#word_to_translate').hide();
@@ -194,7 +187,7 @@ function repeatTheTest() {
     shuffled_index_array = shuffle(index_array);
     $('#repeat_test_button').hide();
     $("#testing_form").show();
-    showNextWord();
+    showWord();
     $('#word_to_translate').show();
     $("#check_word_button").show();
 }
@@ -213,4 +206,8 @@ function shuffle(array) {
         array[randomIndex] = temporaryValue;
     }
     return array;
+}
+
+function playAudio() {
+    document.getElementById('word_to_translate_audio').play();
 }

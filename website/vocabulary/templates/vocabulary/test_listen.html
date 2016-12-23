@@ -7,10 +7,16 @@
     {% load static %}
 
     <h2>Here you can TEST the words from chosen category: <span id="chosen_category">{{ object }}</span>.</h2>
-    <h3>Translate the word given in <span id="set_given_lang"></span> into <span id="set_to_translate_lang"></span>:
-    </h3>
+    <h3>Listen to the word given in <span id="set_given_lang"></span> and write it in <span
+            id="set_to_translate_lang"></span>:</h3>
     <button type="submit" class="btn btn-primary" id="start_test_button">CLICK TO START THE TEST! :)</button>
-    <div id="word_to_translate"></div>
+
+    <div id="word_audio_div">
+        <audio controls id="word_to_translate_audio">
+            <source src="" type="audio/mpeg"/>
+        </audio>
+    </div>
+    <button id="playAudioButton" class="play" onclick="playAudio()"></button>
 
     <form class="form-inline" id="testing_form">
         <div class="form-group">

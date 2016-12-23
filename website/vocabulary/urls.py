@@ -20,8 +20,12 @@ urlpatterns = [
     url(r'^test1/$', views.TestingView1.as_view(), name='testing1_categories'),
     # /vocabulary/test2/ (translate polish word into english)
     url(r'^test2/$', views.TestingView2.as_view(), name='testing2_categories'),
+    # /vocabulary/test3/ (listen to english word and write it in polish)
+    url(r'^test3/$', views.TestingView3.as_view(), name='testing3_categories'),
     # /vocabulary/test{1,2}/<category_name>/
     url(r'^test_translate/(?P<slug>[-\w]+)/$', views.CategoryTestingView.as_view(), name='testing_translate'),
-    # /tralala/json/
-    url(r'^tralala/json', views.json, name='json'),
+    # /vocabulary/test3/<category_name>/
+    url(r'^test_listen/(?P<slug>[-\w]+)/$', views.CategoryTestingView3.as_view(), name='testing_listen'),
+    # /json/
+    url(r'^json', views.json, name='json'),
 ]

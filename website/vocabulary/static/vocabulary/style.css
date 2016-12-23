@@ -25,18 +25,25 @@ body {
     margin-bottom: 10px;
 }
 
-/*
-#next_button{
-    display: none;
-}
-
-#prev_button{
-    display: none;
-}
-*/
 #word_to_translate {
     color: blue;
     font-size: 150%;
+}
+
+#word_audio_div {
+    display: none;
+}
+
+#playAudioButton {
+    display: none;
+}
+
+#playAudioButton {
+    height: 80px;
+    width: 80px;
+    border: none;
+    background: url('/static/vocabulary/pictures/play.png') no-repeat center;
+    background-size: 80% 80%;
 }
 
 #correct_answer {
@@ -94,5 +101,3 @@ body {
         border-top: 0 none;
     }
 }
-
-/* END: FOR LOGIN FORM */

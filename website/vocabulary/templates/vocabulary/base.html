@@ -33,24 +33,27 @@
         <div class="collapse navbar-collapse" id="topNavBar">
             <ul class="nav navbar-nav">
                 {% with url_name=request.resolver_match.url_name %}
-                <li class="{% if url_name == 'learning' %}active{% endif %}">
-                    <a href="{% url 'vocabulary:learning' %}">
-                        <span class="fa fa-lightbulb-o"></span>&nbsp Learn
-                    </a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="fa fa-edit"></span>&nbsp Test yourself <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li class="eng_pol {% if url_name == 'testing1_categories' %}active{% endif %}">
-                            <a href="{% url 'vocabulary:testing1_categories' %}">Translate into polish</a>
-                        </li>
-                        <li class="pol_eng {% if url_name == 'testing2_categories'%}active{% endif %}">
-                            <a href="{% url 'vocabulary:testing2_categories' %}">Translate into english</a>
-                        </li>
-                    </ul>
-                </li>
+                    <li class="{% if url_name == 'learning' %}active{% endif %}">
+                        <a href="{% url 'vocabulary:learning' %}">
+                            <span class="fa fa-lightbulb-o"></span>&nbsp Learn
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="fa fa-edit"></span>&nbsp Test yourself <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="eng_pol {% if url_name == 'testing1_categories' %}active{% endif %}">
+                                <a href="{% url 'vocabulary:testing1_categories' %}">Translate into polish</a>
+                            </li>
+                            <li class="pol_eng {% if url_name == 'testing2_categories' %}active{% endif %}">
+                                <a href="{% url 'vocabulary:testing2_categories' %}">Translate into english</a>
+                            </li>
+                            <li class="listen {% if url_name == 'testing3_categories' %}active{% endif %}">
+                                <a href="{% url 'vocabulary:testing3_categories' %}">Listen</a>
+                            </li>
+                        </ul>
+                    </li>
                 {% endwith %}
                 <!-- PROGRESS and PROFILE visible only when user is logged
                                     <li>

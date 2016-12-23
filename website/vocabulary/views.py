@@ -112,9 +112,37 @@ class TestingView2(generic.ListView):
             return render(request, self.template_name, {self.context_object_name: self.get_queryset()})
 
 
+class TestingView3(generic.ListView):
+    template_name = 'vocabulary/test3_categories.html'
+    context_object_name = 'categories'
+
+    def get_queryset(self):
+        return Category.objects.all()
+
+    def get(self, request):
+        if not request.user.is_authenticated():
+            return redirect('vocabulary:index')
+        else:
+            return render(request, self.template_name, {self.context_object_name: self.get_queryset()})
+
+
 class CategoryTestingView(generic.DetailView):
     model = Category
     template_name = 'vocabulary/test_translate.html'
+    slug_url_kwarg = 'slug'
+
+    def get(self, request, **kwargs):
+        if not request.user.is_authenticated():
+            return redirect('vocabulary:index')
+        else:
+            self.object = self.get_object()
+            context = self.get_context_data(object=self.object)
+            return self.render_to_response(context)
+
+
+class CategoryTestingView3(generic.DetailView):
+    model = Category
+    template_name = 'vocabulary/test_listen.html'
     slug_url_kwarg = 'slug'
 
     def get(self, request, **kwargs):
