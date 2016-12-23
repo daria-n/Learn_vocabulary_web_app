@@ -1,23 +1,9 @@
-{% extends 'vocabulary/base.html' %}
+{% extends 'vocabulary/test_categories_base.html' %}
 
-{% block title %}Test yourself{% endblock %}
-
-{% block body %}
-
-    {% load static %}
-
-    <h2>Here you can TEST the words you learned.</h2>
+{% block header %}
     <h3>Translate word from <span id="given_language">polish</span> into english.</h3>
+{% endblock %}
 
-    {% if categories %}
-        <h3>Choose category:</h3>
-        {% for cat in categories %}
-            <li><a href="{% url 'vocabulary:testing_translate' cat.category %}"> <img src="{% static cat.picture %}"
-                                                                                      height="100px" alt=""/> <br>
-                {{ cat }} </a></li>
-        {% endfor %}
-    {% else %}
-        <h3>There are no words in the database</h3>
-    {% endif %}
-
+{% block links %}
+    href="{% url 'vocabulary:testing_translate' cat.category %}"
 {% endblock %}

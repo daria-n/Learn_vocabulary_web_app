@@ -1,36 +1,9 @@
-{% extends 'vocabulary/base.html' %}
+{% extends 'vocabulary/test_categories_base.html' %}
 
-{% block title %}Test yourself{% endblock %}
+{% block header %}
+    <h3>Translate word from <span id="given_language">english</span> into polish.</h3>
+{% endblock %}
 
-{% block body %}
-
-{% load static %}
-
-<h2>Here you can TEST the words you learned.</h2>
-<h3>Translate word from <span id="given_language">english</span> into polish.</h3>
-
-{% if categories %}
-<h3>Choose category:</h3>
-{% for cat in categories %}
-<li><a href="{% url 'vocabulary:testing_translate' cat.category %}"> <img src="{% static cat.picture %}" height="100px" alt=""/> <br>
-    {{ cat }} </a></li>
-{% endfor %}
-{% else %}
-<h3>There are no words in the database</h3>
-{% endif %}
-
-<!--
-<h3>Choose testing method:</h3>
-<ul>
-    <li> <a href="#"> wybierz ilustrację na podstawie słówka (4 dostępne do wyboru) </a> </li>
-    <li> <a href="#"> wybierz słówko na podstawie ilustracji (4 dostępne do wyboru) </a> </li>
-    <li> <a href="#"> wybierz poprawne tłumaczenie spośród podanych (3 lub 4 dostępne) </a> </li>
-    <li> <a href="#"> uzupełnij zdanie słówkiem tak, aby miało sens (3 lub 4 opcje do wyboru) </a> </li>
-    <li> <a href="#"> wybierz poprawne tłumaczenie zdania </a> </li>
-    <li> <a href="#"> zestaw kilku wyrazów i wybierz które nie pasuje do reszty </a> </li>
-    <li> <a href="#"> wybierz słówko na podstawie słuchu </a> </li>
-    <li> <a href="#"> na podstawie słuchu napisz wyraz lub zdanie </a> </li>
-    <li> <a href="#"> na podstawie obrazka napisz słowo </a> </li>
-</ul>
--->
+{% block links %}
+    href="{% url 'vocabulary:testing_translate' cat.category %}"
 {% endblock %}
