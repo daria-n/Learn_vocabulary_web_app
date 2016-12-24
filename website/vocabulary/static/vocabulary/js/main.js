@@ -160,6 +160,7 @@ function showNextWord() {
 function checkUserInput() {
     var correct = obj['words'][shuffled_index_array[word_index]][to_translate_lang];
     var input = $("#user_translation").val();
+    //if (correct.indexOf(input) != -1) {
     if (correct == input) {
         $('#wrong_modal_title').hide();
         $('#wrong_cross').hide();

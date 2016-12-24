@@ -1,0 +1,51 @@
+{% extends 'vocabulary/base.html' %}
+
+{% block title %}Test {{ object }}!{% endblock %}
+
+{% block body %}
+
+    {% load static %}
+
+    <h2>Here you can TEST the words from chosen category: <span id="chosen_category">{{ object }}</span>.</h2>
+
+    {% block header %}
+    {% endblock %}
+
+    <button type="submit" class="btn btn-primary" id="start_test_button">CLICK TO START THE TEST! :)</button>
+
+    {% block testing_form %}
+    {% endblock %}
+
+    <button type="submit" class="btn btn-primary" id="repeat_test_button">Repeat the test</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        <span id="correct_modal_title">Correct!</span>
+                        <span id="wrong_modal_title">Wrong...</span>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <span id="correct_tick"><img src="/static/vocabulary/pictures/tick.png" height='70px' alt="">Congratulations, keep going!</span>
+                <span id="wrong_cross"><img src="/static/vocabulary/pictures/cross.png" height='70px' alt="">The correct answer is:
+                    <span id="correct_answer"></span>.
+                </span>
+                <span id="test_finished">
+                    <br>Test finished! Your score is: <span id="score"></span>
+                </span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="close_modal_button">Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
