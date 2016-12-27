@@ -35,12 +35,12 @@
                 {% with url_name=request.resolver_match.url_name %}
                     <li class="{% if url_name == 'learning' %}active{% endif %}">
                         <a href="{% url 'vocabulary:learning' %}">
-                            <span class="fa fa-lightbulb-o"></span>&nbsp Learn
+                            <span class="fa fa-lightbulb-o"></span>&nbsp; Learn
                         </a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <span class="fa fa-edit"></span>&nbsp Test yourself <span class="caret"></span>
+                            <span class="fa fa-edit"></span>&nbsp; Test yourself <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="eng_pol {% if url_name == 'testing1_categories' %}active{% endif %}">
@@ -61,12 +61,12 @@
                 <!-- PROGRESS and PROFILE visible only when user is logged
                                     <li>
                                         <a href="#">
-                                            <span class="fa fa-bar-chart-o"></span>&nbsp Progress
+                                            <span class="fa fa-bar-chart-o"></span>&nbsp; Progress
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <span class="glyphicon glyphicon-user"></span>&nbsp Profile
+                                            <span class="glyphicon glyphicon-user"></span>&nbsp; Profile
                                         </a>
                                     </li>
             -->

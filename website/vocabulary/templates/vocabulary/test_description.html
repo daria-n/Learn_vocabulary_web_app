@@ -1,12 +1,17 @@
 {% extends 'vocabulary/test_modal_base.html' %}
 
 {% block header %}
-    <h3>Read the word description and write it in english:
-    </h3>
+    <h3>Read the word description and write it in english:</h3>
 {% endblock %}
 
 {% block testing_form %}
-    <div id="word_to_translate"></div>
+    <div>
+        <span id="word_to_translate"></span>
+        <span id="imageHint">
+            <img id="wordImage" src="/static/vocabulary/pictures/words/stamp.jpg" width=150px alt="">
+            &nbsp; <img src="/static/vocabulary/pictures/hint.png" height=40px alt=""> &nbsp; HINT - image
+        </span>
+    </div>
     <form class="form-inline" id="testing_form">
         <div class="form-group">
             <label for="user_translation">Your answer:</label>

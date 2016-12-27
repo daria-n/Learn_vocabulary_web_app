@@ -2,7 +2,7 @@ body {
     background-image: url('/static/vocabulary/pictures/giftly_background.png');
 }
 
-/* FOR LOGIN FORM */
+/* LOGIN FORM */
 #login-dp {
     min-width: 250px;
     padding: 14px 14px 0;
@@ -25,6 +25,7 @@ body {
     margin-bottom: 10px;
 }
 
+/* TESTING */
 #word_to_translate {
     color: blue;
     font-size: 150%;
@@ -82,6 +83,27 @@ body {
 
 #testing_form {
     display: none;
+}
+
+/* IMAGE HINT IN TESTING */
+#imageHint {
+    display: none;
+    position: relative;
+}
+
+#imageHint #wordImage {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: 1em;
+    opacity: 0;
+    pointer-events: none;
+    transition-duration: 800ms;
+}
+
+#imageHint:hover #wordImage {
+    opacity: 1;
+    transition-duration: 400ms;
 }
 
 @media screen and (min-width: 768px) {

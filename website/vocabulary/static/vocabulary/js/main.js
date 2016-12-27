@@ -64,6 +64,9 @@ $(document).ready(function () {
 function startTheTest() {
     $('#start_test_button').hide();
     $('#testing_form').show();
+    if (window.location.pathname.indexOf('test_description') > 0) {
+        $('#imageHint').show();
+    }
     loadWords();
 }
 
@@ -144,6 +147,7 @@ function showWord() {
     }
     else if (window.location.pathname.indexOf('test_description') > 0) {
         $('#word_to_translate').text(word_description);
+        $("#wordImage").attr('src', '/static/vocabulary/pictures/words/' + word_in_english + '.png');
     }
     $("#user_translation").val("");
     $('#check_word_button').attr('disabled', true);
@@ -161,6 +165,9 @@ function showNextWord() {
         $("#testing_form").hide();
         $('#word_to_translate').hide();
         $('#repeat_test_button').show();
+        if (window.location.pathname.indexOf('test_description') > 0) {
+            $('#imageHint').hide();
+        }
     }
 }
 
@@ -198,6 +205,9 @@ function repeatTheTest() {
     showWord();
     $('#word_to_translate').show();
     $("#check_word_button").show();
+    if (window.location.pathname.indexOf('test_description') > 0) {
+        $('#imageHint').show();
+    }
 }
 
 function shuffle(array) {
