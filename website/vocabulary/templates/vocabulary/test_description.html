@@ -1,17 +1,12 @@
 {% extends 'vocabulary/test_modal_base.html' %}
 
 {% block header %}
-    <h3>Listen to the word and write it in <span id="set_to_translate_lang"></span>:</h3>
+    <h3>Read the word description and write it in english:
+    </h3>
 {% endblock %}
 
 {% block testing_form %}
-    <div id="word_audio_div">
-        <audio controls id="word_to_translate_audio">
-            <source src="" type="audio/mpeg"/>
-        </audio>
-    </div>
-    <button id="playAudioButton" class="play" onclick="playAudio()"></button>
-
+    <div id="word_to_translate"></div>
     <form class="form-inline" id="testing_form">
         <div class="form-group">
             <label for="user_translation">Your answer:</label>

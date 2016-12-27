@@ -9,11 +9,11 @@ var to_translate_lang;
 
 $(document).ready(function () {
 
-    if (window.location.pathname == '/test1/' || window.location.pathname == '/test2/' || window.location.pathname == '/test3/') {
+    if (window.location.pathname == '/test1/' || window.location.pathname == '/test2/' || window.location.pathname == '/test3/' || window.location.pathname == '/test4/') {
         setGivenLanguage();
     }
 
-    if (window.location.pathname.indexOf('test_translate') > 0 || window.location.pathname.indexOf('test_listen') > 0) {
+    if (window.location.pathname.indexOf('test_translate') > 0 || window.location.pathname.indexOf('test_listen') > 0 || window.location.pathname.indexOf('test_description') > 0) {
         getGivenLanguage();
         $('form').get(0).reset();
     }
@@ -68,13 +68,13 @@ function startTheTest() {
 }
 
 function setGivenLanguage() {
-    if ($('#given_language').text() == 'english') {
-        given_lang = 'eng';
-        to_translate_lang = 'pol';
-    }
-    else if ($('#given_language').text() == 'polish') {
+    if ($('#given_language').text() == 'polish' || window.location.pathname == '/test3/' || window.location.pathname == '/test4/') {
         given_lang = 'pol';
         to_translate_lang = 'eng';
+    }
+    else if ($('#given_language').text() == 'english') {
+        given_lang = 'eng';
+        to_translate_lang = 'pol';
     }
     localStorage.setItem("given_lang", given_lang);
     localStorage.setItem("to_translate_lang", to_translate_lang);
@@ -84,11 +84,13 @@ function getGivenLanguage() {
     given_lang = localStorage.getItem("given_lang");
     to_translate_lang = localStorage.getItem("to_translate_lang");
     if (window.location.pathname.indexOf('test_listen') > 0) {
-        $('#set_given_lang').text('english');
-        $('#set_to_translate_lang').text('polish');
+        $('#set_to_translate_lang').text('english');
         $('.dropdown-menu li').filter('.listen').addClass('active');
         //$('.dropdown-menu li').filter('.eng_pol').remove('active');
         //$('.dropdown-menu li').filter('.pol_eng').remove('active');
+    }
+    else if (window.location.pathname.indexOf('test_description') > 0) {
+        $('.dropdown-menu li').filter('.desc').addClass('active');
     }
     else if (given_lang == 'eng') {
         $('#set_given_lang').text('english');
@@ -129,14 +131,19 @@ function loadWords() {
 }
 
 function showWord() {
-    var word_to_translate = obj['words'][shuffled_index_array[word_index]][given_lang]
+    var word_to_translate = obj['words'][shuffled_index_array[word_index]][given_lang];
+    var word_in_english = obj['words'][shuffled_index_array[word_index]]['eng'];
+    var word_description = obj['words'][shuffled_index_array[word_index]]['desc'];
     if (window.location.pathname.indexOf('test_translate') > 0) {
         $('#word_to_translate').text(word_to_translate);
     }
     else if (window.location.pathname.indexOf('test_listen') > 0) {
         $("#playAudioButton").show();
-        $("#word_to_translate_audio").attr('src', '/static/vocabulary/audios/' + word_to_translate + '.mp3');
+        $("#word_to_translate_audio").attr('src', '/static/vocabulary/audios/' + word_in_english + '.mp3');
         $("#word_to_translate_audio").trigger('play');
+    }
+    else if (window.location.pathname.indexOf('test_description') > 0) {
+        $('#word_to_translate').text(word_description);
     }
     $("#user_translation").val("");
     $('#check_word_button').attr('disabled', true);

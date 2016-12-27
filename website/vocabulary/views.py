@@ -45,7 +45,7 @@ def json(request):
                 category_id = Category.objects.get(category=command).id
                 my_data = Word.objects.filter(category=category_id)
             total_num = my_data.count()
-            data = js.dumps({'words': [{'eng': elem.english, 'pol': elem.polish} for elem in my_data]})
+            data = js.dumps({'words': [{'eng': elem.english, 'pol': elem.polish, 'desc': elem.description} for elem in my_data]})
             context = {'all_data': data, 'counter': total_num}
             return JsonResponse(context, safe=False)
         else:
@@ -126,6 +126,20 @@ class TestingView3(generic.ListView):
             return render(request, self.template_name, {self.context_object_name: self.get_queryset()})
 
 
+class TestingView4(generic.ListView):
+    template_name = 'vocabulary/test4_categories.html'
+    context_object_name = 'categories'
+
+    def get_queryset(self):
+        return Category.objects.all()
+
+    def get(self, request):
+        if not request.user.is_authenticated():
+            return redirect('vocabulary:index')
+        else:
+            return render(request, self.template_name, {self.context_object_name: self.get_queryset()})
+
+
 class CategoryTestingView(generic.DetailView):
     model = Category
     template_name = 'vocabulary/test_translate.html'
@@ -143,6 +157,20 @@ class CategoryTestingView(generic.DetailView):
 class CategoryTestingView3(generic.DetailView):
     model = Category
     template_name = 'vocabulary/test_listen.html'
+    slug_url_kwarg = 'slug'
+
+    def get(self, request, **kwargs):
+        if not request.user.is_authenticated():
+            return redirect('vocabulary:index')
+        else:
+            self.object = self.get_object()
+            context = self.get_context_data(object=self.object)
+            return self.render_to_response(context)
+
+
+class CategoryTestingView4(generic.DetailView):
+    model = Category
+    template_name = 'vocabulary/test_description.html'
     slug_url_kwarg = 'slug'
 
     def get(self, request, **kwargs):

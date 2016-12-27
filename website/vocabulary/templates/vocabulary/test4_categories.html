@@ -1,0 +1,9 @@
+{% extends 'vocabulary/test_categories_base.html' %}
+
+{% block header %}
+    <h3>Read the word word description and write it in english. <span id="given_language"></span><!--in <span id="given_language">english</span> and write it in polish.--></h3>
+{% endblock %}
+
+{% block links %}
+    href="{% url 'vocabulary:testing_description' cat.category %}"
+{% endblock %}
