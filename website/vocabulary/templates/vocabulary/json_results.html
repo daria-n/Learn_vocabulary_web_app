@@ -1,0 +1,40 @@
+{% extends 'vocabulary/base.html' %}
+{% block title %}Json{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+    {% if current_data %}
+        <h3>All the results:</h3>
+        <table class="table table-condensed table-hover">
+            <thead>
+            <tr class="active">
+                <th>date, time</th>
+                <th>user</th>
+                <th>test type</th>
+                <th>category</th>
+                <th>score</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for data in current_data %}
+                <tr>
+                    <td>{{ data.date }}</td>
+                    <td>{{ data.user_id }}</td>
+                    <td>{{ data.test_type }}</td>
+                    <td>{{ data.category }}</td>
+                    <td>{{ data.score }}/{{ data.max_possible }}</td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+    {% else %}
+        <h3> No data! </h3>
+    {% endif %}
+
+{% endblock body %}
+
+</div>

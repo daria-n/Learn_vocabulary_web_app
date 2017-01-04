@@ -58,21 +58,14 @@
                         </ul>
                     </li>
                 {% endwith %}
-                <!-- PROGRESS and PROFILE visible only when user is logged
-                                    <li>
-                                        <a href="#">
-                                            <span class="fa fa-bar-chart-o"></span>&nbsp; Progress
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span class="glyphicon glyphicon-user"></span>&nbsp; Profile
-                                        </a>
-                                    </li>
-            -->
             </ul>
-            <!-- Logout button -->
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="{% url 'vocabulary:profile' %}">
+                        <span class="glyphicon glyphicon-user"></span>&nbsp; Profile
+                    </a>
+                </li>
+                <!-- Logout button -->
                 <li>
                     <a href="{% url 'vocabulary:logging_out' %}">
                         <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Logout

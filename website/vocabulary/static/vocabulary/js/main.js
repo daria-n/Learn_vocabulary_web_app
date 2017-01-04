@@ -6,6 +6,7 @@ var shuffled_index_array;
 var obj;
 var given_lang;
 var to_translate_lang;
+var category = "";
 
 $(document).ready(function () {
 
@@ -111,9 +112,10 @@ function getGivenLanguage() {
 
 function loadWords() {
     var command = $('#chosen_category').text();
+    category = command;
     $.ajax({
         type: "GET",
-        url: "/json/",
+        url: "/json/words/",
         data: {Command: command},
         cache: false,
         dataType: "json",
@@ -129,6 +131,26 @@ function loadWords() {
         error: function (error) {
             console.log("Error:");
             console.log(error);
+        }
+    });
+}
+
+function saveResult() {
+    var test_type;
+    if (window.location.pathname.indexOf('test_translate') > 0)
+        test_type = "translating";
+    else if (window.location.pathname.indexOf('test_listen') > 0)
+        test_type = "listening";
+    else if (window.location.pathname.indexOf('test_description') > 0)
+        test_type = "understanding description";
+    else
+        test_type = "unknown";
+    $.ajax({
+        type: 'POST',
+        url: '/json/results/',
+        data: {score: score, max_possible: total, category: category, test_type: test_type},
+        error: function () {
+            alert('ERROR!');
         }
     });
 }
@@ -168,6 +190,7 @@ function showNextWord() {
         if (window.location.pathname.indexOf('test_description') > 0) {
             $('#imageHint').hide();
         }
+        saveResult();
     }
 }
 

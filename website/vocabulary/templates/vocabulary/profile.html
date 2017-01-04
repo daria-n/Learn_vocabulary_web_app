@@ -1,0 +1,46 @@
+{% extends 'vocabulary/base.html' %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        {% if current_user %}
+            <h3>Here you can see your data:</h3>
+            <b>Username:</b> {{ current_user.username }}<br>
+            <b>Email:</b> {{ current_user.email }}<br>
+            <b>Last login:</b> {{ current_user.last_login }}<br>
+        {% else %}
+            <h3>No user is logged in.</h3>
+        {% endif %}
+
+        {% if results %}
+            <h3>Your test results history:</h3>
+            <table class="table table-condensed table-hover">
+                <thead>
+                <tr class="active">
+                    <th>date, time</th>
+                    <th>test type</th>
+                    <th>category</th>
+                    <th>score</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for data in results %}
+                    <tr>
+                        <td>{{ data.date }}</td>
+                        <td>{{ data.test_type }}</td>
+                        <td>{{ data.category }}</td>
+                        <td>{{ data.score }}/{{ data.max_possible }}</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+        {% else %}
+            <h3>You have not taken any tests yet.</h3>
+        {% endif %}
+
+    </div>
+
+{% endblock %}

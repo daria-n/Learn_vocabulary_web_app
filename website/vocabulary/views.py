@@ -1,22 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-# from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
 from django.views import generic
 # from django.views.generic import View
-from .models import Word, Category
+from .models import Word, Category, User, Result
 from .forms import UserForm
 from django.http import JsonResponse
 import json as js
-
-
 # from django.urls import reverse
-
-
-# Create your views here.
-# def index(request):
-#     all_words = Word.objects.all()
-#     context = {'my_words': all_words}
-#     return render(request, 'vocabulary/index.html', context)
 
 
 class IndexView(generic.ListView):
@@ -33,7 +25,21 @@ class IndexView(generic.ListView):
             return render(request, self.template_name, {self.context_object_name: self.get_queryset()})
 
 
-def json(request):
+class ProfileView(generic.ListView):
+    template_name = 'vocabulary/profile.html'
+    context_object_name = 'current_user'
+
+    def get(self, request):
+        if not request.user.is_authenticated():
+            return render(request, 'vocabulary/index_visitor.html')
+        else:
+            current_user_id = request.user.id
+            results_history = Result.objects.filter(user_id=current_user_id)
+            return render(request, self.template_name, {self.context_object_name: User.objects.get(id=current_user_id),
+                                                        'results': results_history})
+
+
+def json_words(request):
     if not request.user.is_authenticated():
         return redirect('vocabulary:index')
     else:
@@ -49,11 +55,28 @@ def json(request):
             context = {'all_data': data, 'counter': total_num}
             return JsonResponse(context, safe=False)
         else:
-            # return redirect('vocabulary:index')
             my_data = Word.objects.all()
             my_data = list(reversed(my_data))
             count = len(my_data)
-            return render(request, 'vocabulary/json.html', {'current_data': my_data, 'count': count})
+            return render(request, 'vocabulary/json_words.html', {'current_data': my_data, 'count': count})
+
+
+@csrf_exempt
+def json_results(request):
+    if not request.user.is_authenticated():
+        return redirect('vocabulary:index')
+    else:
+        if request.POST:
+            data = request.POST
+            query = Result(user_id=User.objects.get(id=request.user.id), category=data['category'],
+                           test_type=data['test_type'], score=data['score'], max_possible=data['max_possible'])
+            query.save()
+            return redirect('vocabulary:index')  # why does it not redirect?
+        else:
+            my_data = Result.objects.all()
+            my_data = list(reversed(my_data))
+            count = len(my_data)
+            return render(request, 'vocabulary/json_results.html', {'current_data': my_data, 'count': count})
 
 
 class LearningView(generic.ListView):
