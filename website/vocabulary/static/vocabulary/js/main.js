@@ -1,5 +1,6 @@
 var word_index = 0;
 var total = -1;
+var total_wrong = 0;
 var score = 0;
 var index_array;
 var shuffled_index_array;
@@ -7,6 +8,10 @@ var obj;
 var given_lang;
 var to_translate_lang;
 var category = "";
+var words_map = [];
+var wrong_words_indexes = [];
+var repeat_wrong = 0;
+
 
 $(document).ready(function () {
 
@@ -42,6 +47,10 @@ $(document).ready(function () {
         repeatTheTest();
     });
 
+    $("#repeat_wrong_words_button").click(function () {
+        repeatWrongWords();
+    });
+
     $("#testing_form").submit(function (e) {
         e.preventDefault();
     });
@@ -58,6 +67,10 @@ $(document).ready(function () {
         } else {
             $('.actions button').attr('disabled', false);
         }
+    });
+
+    $('#playAudioButton').click(function () {
+        $('#user_translation').focus();
     });
 
 });
@@ -122,7 +135,7 @@ function loadWords() {
         success: function (data) {
             obj = JSON.parse(data['all_data']);
             total = data['counter'];
-            index_array = Array.apply(null, Array(total)).map(function (_, i) {
+            index_array = Array.apply(null, new Array(total)).map(function (_, i) {
                 return i;
             });
             shuffled_index_array = shuffle(index_array);
@@ -133,6 +146,15 @@ function loadWords() {
             console.log(error);
         }
     });
+}
+
+function loadWrongWords() {
+    wrong_words_indexes = [];
+    for (var ii = 0; ii < obj['words'].length; ii++) {
+        if (words_map[ii] == 0)
+            wrong_words_indexes.push(ii);
+    }
+    total_wrong = wrong_words_indexes.length;
 }
 
 function saveResult() {
@@ -156,9 +178,14 @@ function saveResult() {
 }
 
 function showWord() {
-    var word_to_translate = obj['words'][shuffled_index_array[word_index]][given_lang];
-    var word_in_english = obj['words'][shuffled_index_array[word_index]]['eng'];
-    var word_description = obj['words'][shuffled_index_array[word_index]]['desc'];
+    var index;
+    if (repeat_wrong)
+        index = wrong_words_indexes[word_index];
+    else
+        index = shuffled_index_array[word_index];
+    var word_to_translate = obj['words'][index][given_lang];
+    var word_in_english = obj['words'][index]['eng'];
+    var word_description = obj['words'][index]['desc'];
     if (window.location.pathname.indexOf('test_translate') > 0) {
         $('#word_to_translate').text(word_to_translate);
     }
@@ -177,7 +204,12 @@ function showWord() {
 }
 
 function showNextWord() {
-    if (word_index < total - 1) {
+    var total_temp;
+    if (repeat_wrong)
+        total_temp = total_wrong;
+    else
+        total_temp = total;
+    if (word_index < total_temp - 1) {
         word_index += 1;
         showWord();
     }
@@ -187,6 +219,10 @@ function showNextWord() {
         $("#testing_form").hide();
         $('#word_to_translate').hide();
         $('#repeat_test_button').show();
+        if (!repeat_wrong)
+            $('#repeat_wrong_words_button').show();
+        else
+            repeat_wrong = 0;
         if (window.location.pathname.indexOf('test_description') > 0) {
             $('#imageHint').hide();
         }
@@ -195,14 +231,24 @@ function showNextWord() {
 }
 
 function checkUserInput() {
-    var correct = obj['words'][shuffled_index_array[word_index]][to_translate_lang];
+    var index;
+    var total_temp;
+    if (repeat_wrong)
+        total_temp = total_wrong;
+    else
+        total_temp = total;
+    if (repeat_wrong)
+        index = wrong_words_indexes[word_index];
+    else
+        index = shuffled_index_array[word_index];
+    var correct = obj['words'][index][to_translate_lang];
     var input = $("#user_translation").val();
-    //if (correct.indexOf(input) != -1) {
     if (correct == input) {
         $('#wrong_modal_title').hide();
         $('#wrong_cross').hide();
         $('#correct_modal_title').show();
         $('#correct_tick').show();
+        words_map[shuffled_index_array[word_index]] = 1;
         score += 1;
     }
     else {
@@ -211,10 +257,11 @@ function checkUserInput() {
         $('#correct_tick').hide();
         $('#wrong_modal_title').show();
         $('#wrong_cross').show();
+        words_map[shuffled_index_array[word_index]] = 0;
     }
-    if (word_index >= total - 1) {
+    if (word_index >= total_temp - 1) {
         $('#test_finished').show();
-        $('#score').text(score + "/" + total);
+        $('#score').text(score + "/" + total_temp);
     }
 }
 
@@ -222,8 +269,33 @@ function repeatTheTest() {
     $('#test_finished').hide();
     word_index = 0;
     score = 0;
+    index_array = Array.apply(null, new Array(total)).map(function (_, i) {
+        return i;
+    });
     shuffled_index_array = shuffle(index_array);
     $('#repeat_test_button').hide();
+    $('#repeat_wrong_words_button').hide();
+    $("#testing_form").show();
+    showWord();
+    $('#word_to_translate').show();
+    $("#check_word_button").show();
+    if (window.location.pathname.indexOf('test_description') > 0)
+        $('#imageHint').show();
+    words_map = [];
+}
+
+function repeatWrongWords() {
+    repeat_wrong = 1;
+    $('#test_finished').hide();
+    word_index = 0;
+    score = 0;
+    loadWrongWords();
+    index_array = Array.apply(null, new Array(total_wrong)).map(function (_, i) {
+        return i;
+    });
+    shuffled_index_array = shuffle(index_array);
+    $('#repeat_test_button').hide();
+    $('#repeat_wrong_words_button').hide();
     $("#testing_form").show();
     showWord();
     $('#word_to_translate').show();
@@ -231,6 +303,7 @@ function repeatTheTest() {
     if (window.location.pathname.indexOf('test_description') > 0) {
         $('#imageHint').show();
     }
+    words_map = [];
 }
 
 function shuffle(array) {

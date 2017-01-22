@@ -81,6 +81,10 @@ body {
     display: none;
 }
 
+#repeat_wrong_words_button {
+    display: none;
+}
+
 #testing_form {
     display: none;
 }
