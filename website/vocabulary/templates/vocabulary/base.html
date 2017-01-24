@@ -60,11 +60,13 @@
                 {% endwith %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li>
+                {% with url_name=request.resolver_match.url_name %}
+                <li class="{% if url_name == 'profile' %}active{% endif %}">
                     <a href="{% url 'vocabulary:profile' %}">
                         <span class="glyphicon glyphicon-user"></span>&nbsp; Profile
                     </a>
                 </li>
+                {% endwith %}
                 <!-- Logout button -->
                 <li>
                     <a href="{% url 'vocabulary:logging_out' %}">
